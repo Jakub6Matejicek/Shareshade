@@ -3,7 +3,7 @@
 > A tiny, zero-dependency library for applying a shared gradient overlay across multiple DOM elements – no CSS imports needed!
 
 ![npm](https://img.shields.io/npm/v/shareshade)
-![license](https://img.shields.io/npm/l/shareshade)
+![license](https://github.com/Jakub6Matejicek/Shareshade/blob/main/LICENSE)
 ![bundle size](https://img.shields.io/bundlephobia/minzip/shareshade)
 
 ---
