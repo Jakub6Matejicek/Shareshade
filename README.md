@@ -2,9 +2,8 @@
 
 > A tiny, zero-dependency library for applying a shared gradient overlay across multiple DOM elements – no CSS imports needed!
 
-![npm](https://img.shields.io/npm/v/shareshade)
+![npm](https://www.npmjs.com/package/shareshade)
 ![license](https://github.com/Jakub6Matejicek/Shareshade/blob/main/LICENSE)
-![bundle size](https://img.shields.io/bundlephobia/minzip/shareshade)
 
 ---
 
@@ -25,12 +24,6 @@ Using npm:
 
 ```bash
 npm install shareshade
-```
-
-Or via CDN:
-
-```html
-<script src="https://unpkg.com/shareshade/dist/shareshade.js"></script>
 ```
 
 ---
@@ -166,5 +159,3 @@ MIT License © 2025 Jakub Matějíček
 NPM: https://www.npmjs.com/package/shareshade
 
 GitHub: https://github.com/your-username/shareshade
-
-CDN: https://unpkg.com/shareshade/

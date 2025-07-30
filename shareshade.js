@@ -6,15 +6,14 @@ export default class ShareShade {
 
     this.selector = options.selector;
     this.background = options.background;
-    this.opacity = options.opacity || 1;
+    this.opacity = options.opacity ?? 1;
     this.className = 'shareshade-overlay';
 
-    this.injectStyle();
-
-    this._resizeHandler = () => this.update(this.background);
+    this._resizeHandler = () => this.update();
     window.addEventListener('resize', this._resizeHandler);
 
-    this.update(this.background);
+    this.injectStyle();
+    this.update();
   }
 
   injectStyle() {
@@ -36,13 +35,14 @@ export default class ShareShade {
     document.head.appendChild(style);
   }
 
-  update(styles) {
-    if (!styles) return;
-
+  update() {
     const elements = document.querySelectorAll(this.selector);
     if (!elements.length) return;
 
-    let minTop = Infinity, minLeft = Infinity, maxRight = -Infinity, maxBottom = -Infinity;
+    let minTop = Infinity;
+    let minLeft = Infinity;
+    let maxRight = -Infinity;
+    let maxBottom = -Infinity;
 
     elements.forEach(el => {
       const rect = el.getBoundingClientRect();
@@ -57,8 +57,8 @@ export default class ShareShade {
       maxBottom = Math.max(maxBottom, bottom);
     });
 
-    const boundingWidth = maxRight - minLeft;
-    const boundingHeight = maxBottom - minTop;
+    const width = maxRight - minLeft;
+    const height = maxBottom - minTop;
 
     elements.forEach(el => {
       const rect = el.getBoundingClientRect();
@@ -67,37 +67,25 @@ export default class ShareShade {
 
       const overlay = document.createElement('div');
       overlay.className = this.className;
-      overlay.style.position = 'absolute';
-      overlay.style.pointerEvents = 'none';
-      overlay.style.zIndex = '-1';
-      overlay.style.backgroundImage = this.background.startsWith('url') ? `url("${this.background}")` : this.background;
-      overlay.style.backgroundSize = `${boundingWidth}px ${boundingHeight}px`;
-      overlay.style.backgroundRepeat = 'no-repeat';
+      overlay.style.backgroundImage = this.background.startsWith('url')
+        ? `url("${this.background}")`
+        : this.background;
+      overlay.style.backgroundSize = `${width}px ${height}px`;
       overlay.style.backgroundPosition = `-${left - minLeft}px -${top - minTop}px`;
       overlay.style.opacity = this.opacity;
+      overlay.style.position = 'absolute';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.right = '0';
+      overlay.style.bottom = '0';
+      overlay.style.pointerEvents = 'none';
+      overlay.style.zIndex = '-1';
 
-      const computedStyle = getComputedStyle(el);
-      const isAbs = computedStyle.position === 'absolute';
+      const computed = getComputedStyle(el);
+      if (computed.position === 'static') el.style.position = 'relative';
 
-      if (isAbs) {
-        overlay.style.width = '100%';
-        overlay.style.height = '100%';
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.right = '0';
-        overlay.style.bottom = '0';
-      } else {
-        if (computedStyle.position === 'static') {
-          el.style.position = 'relative';
-        }
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.right = '0';
-        overlay.style.bottom = '0';
-      }
-
-      const old = el.querySelector(`.${this.className}`);
-      if (old) old.remove();
+      const existing = el.querySelector(`.${this.className}`);
+      if (existing) existing.remove();
 
       el.appendChild(overlay);
     });
@@ -105,7 +93,6 @@ export default class ShareShade {
 
   destroy() {
     window.removeEventListener('resize', this._resizeHandler);
-
     const elements = document.querySelectorAll(this.selector);
     elements.forEach(el => {
       const overlay = el.querySelector(`.${this.className}`);
