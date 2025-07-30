@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shareshade - demo</title>
+    <script src="../dist/shareshade.js"></script>
+    <!--implementation script-->
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            new ShareShade({
+            selector: '.g',
+            background: 'linear-gradient(to left, #e66465, #9198e5)'
+            });
+        });
+
+        
+    </script>
+</head>
+<style>
+    .content{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        width: 60vw;
+        margin: 20vh auto;
+        gap: 20px;
+    }
+
+    .item{
+        width: 100%;
+        min-height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    .g{
+        background-color: transparent;
+        color: white;
+    }
+
+    .s{
+        background-color: black;
+        color: white;
+    }
+</style>
+<body>
+
+    <!--content-->
+    <div class="content">
+        <div class="item g">Content 1</div>
+        <div class="item s">Content 2</div>
+        <div class="item g">Content 3</div>
+        <div class="item g">Content 4</div>
+        <div class="item g">Content 5</div>
+        <div class="item s">Content 6</div>
+        <div class="item g">Content 7</div>
+        <div class="item s">Content 8</div>
+    </div>
+</body>
+</html>
